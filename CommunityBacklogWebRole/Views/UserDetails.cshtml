@@ -1,0 +1,14 @@
+﻿@using CommunityBacklogWebRole.VSOHelpers
+@{
+    var activeUser = VsoHelper.GetActiveUser();
+}
+<li class="navbar-text">
+    @if (activeUser == null)
+    {
+        <text>Not logged in</text>
+    }
+    else
+    {
+        <text>@activeUser.Profile.displayName</text>
+    }
+</li>

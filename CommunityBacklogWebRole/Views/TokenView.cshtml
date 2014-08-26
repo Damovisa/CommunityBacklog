@@ -1,0 +1,23 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<CommunityBacklogWebRole.Models.TokenModel>
+@{
+    Layout = "Shared/_Layout.cshtml";
+    ViewBag.Title = "Token Information";
+}
+
+<h2>Token Information</h2>
+
+<p><strong>Access Token: </strong>@Model.accessToken</p>
+<p><strong>Token Type: </strong>@Model.tokenType</p>
+<p><strong>Expires In: </strong>@Model.expiresIn</p>
+<p><strong>Refresh Token: </strong>@Model.refreshToken</p>
+<p><strong>User: </strong>@Model.Profile.displayName</p>
+@if (Model.Error != null)
+{
+    <p>@Html.Raw(Model.Error)</p>
+}
+
+@section scripts {
+    <script type="text/javascript">
+        window.close();
+    </script>
+}

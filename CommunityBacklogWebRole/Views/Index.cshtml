@@ -1,0 +1,81 @@
+﻿@using CommunityBacklogWebRole.Models
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<CommunityBacklogWebRole.Models.SubmissionModel>
+@{
+    Layout = "Shared/_Layout.cshtml";
+    ViewBag.Title = "Community Backlog";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Community Backlog</h1>
+    </div>
+</div>
+<form id="submitForm" action="/submit" role="form" method="POST">
+    <div class="row">
+        <div class="col-md-12">
+            <p>This tool lets your users choose the backlog for your product.</p>
+            <p>
+                If you have a couple of potential work items you want your users to vote on, fill out the details below, then
+                let your users know the provided URL. Once one of the items reaches your threshold of votes, the work item will
+                be added to your project backlog.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Enter your backlog options</h2>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <label for="itemTitle1" class="control-label">First Backlog Option</label>
+            <input type="text" id="itemTitle1" name="itemTitle1" placeholder="Title" class="form-control" value="@Model.ItemTitle1" />
+            <textarea id="itemDesc1" name="itemDesc1" rows="2" placeholder="Description" class="form-control">@Model.ItemDesc1</textarea>
+            <p class="text-muted">The title and description of the first candidate</p>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <label for="itemTitle2" class="control-label">Second Backlog Option</label>
+            <input type="text" id="itemTitle2" name="itemTitle2" placeholder="Title" class="form-control" value="@Model.ItemTitle2" />
+            <textarea id="itemDesc2" name="itemDesc2" rows="2" placeholder="Description" class="form-control">@Model.ItemDesc2</textarea>
+            <p class="text-muted">The title and description of the second candidate</p>
+        </div>
+        <div class="col-md-3 col-xs-6">
+            <label for="threshold" class="control-label">Voting Threshold</label>
+            <input type="number" id="threshold" name="threshold" class="form-control" value="@Model.Threshold" />
+            <p class="text-muted">How many votes are needed for success?</p>
+        </div>
+<!-- TODO
+    <div class="col-md-3 col-xs-6">
+        <label for="timelimit" class="control-label">Time Limit</label>
+        <select class="form-control" id="timelimit" name="timelimit">
+            <option @(Model.TimeLimit == TimeLimit.OneDay ? "selected " : "")value="0">1 day</option>
+            <option @(Model.TimeLimit == TimeLimit.OneWeek ? "selected " : "")value="1">1 week</option>
+            <option @(Model.TimeLimit == TimeLimit.FourWeeks ? "selected " : "")value="2">4 weeks</option>
+            <option @(Model.TimeLimit == TimeLimit.ThreeMonths ? "selected " : "")value="2">3 months</option>
+            <option @(Model.TimeLimit == TimeLimit.NoTimeLimit ? "selected " : "")value="2">no time limit</option>
+        </select>
+        <p class="text-muted">How long should the voting remain open?</p>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <label for="email" class="control-label">Notification Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="user@domain.com" value="@Model.Email" />
+        <p class="text-muted">Optional email address for notification when an item is voted in.</p>
+    </div>
+-->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Connect to Team Foundation Server</h2>
+            @Html.Partial("_VsoConnection")
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-12" style="text-align: center;">
+            <input type="submit" class="btn btn-success" name="btnSubmit" id="btnSubmit" />
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    <script src="~/Content/Scripts/OAuth.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Content/Scripts/vso.js"></script>
+}
