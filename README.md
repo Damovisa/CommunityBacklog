@@ -11,3 +11,9 @@ This demo app has the following features:
 * Use of a few [Visual Studio Online REST APIs](http://www.visualstudio.com/integrate/reference/reference-vso-overview-vsi)
 
 If you have any questions, hit me up on Twitter at @damovisa.
+
+### Known Issue:
+
+Currently there's no user management. The only credentials you have are stored in a cookie and consist of a VSO OAuth token. Unfortunately, when the "create a work item" request is made, this access token has likely expired, meaning we have to retrieve another one. This has the side-effect of invalidating the cookie we've stored locally in your browser.
+
+I'll fix this by handling users better and keeping an up-to-date VSO OAuth token, however in the meantime you'll probably have to delete the cookie if you're going to use it more than once.
