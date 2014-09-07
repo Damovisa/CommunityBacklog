@@ -30,36 +30,37 @@
         line-height: 1em;
     }
 </style>
-
-<input type="hidden" id="key" value="@Model.Key" />
-<div class="row" style="text-align:center;margin-bottom:10px;">
-    <div class="col-sm-12"><h3>Share <a href="@path">@shortPath</a> with your team <i id="openQR" class="fa fa-qrcode" style="cursor: pointer"></i></h3></div>
-    <div class="col-sm-11"><div id="qr" style="width:400px; margin: 0 auto; display:none;"></div></div>
-</div>
-<div class="row">
-    <div class="col-sm-12 bg-success hidden" id="message" style="font-size:1.3em;margin-bottom:5px;"></div>
-</div>
-<div class="row">
-    <div class="col-sm-6 vote-option">
-        <div class="row">
-            <div class="col-sm-11 well well-sm" id="item1">
-                <div class="col-sm-12 submission-title">@Model.ItemTitle1</div>
-                <div class="col-sm-12 submission-votes" id="item1Votes">@Model.Item1Votes</div>
-                <div class="col-sm-12 submission-desc">@Model.ItemDesc1</div>
-                <div class="col-sm-12" style="text-align:center; margin-top:10px;">
-                    <button data-item="1" type="button" class="btn btn-lg btn-primary" disabled="disabled">Vote</button>
+<div id="voteSection">
+    <input type="hidden" id="key" value="@Model.Key" />
+    <div class="row" style="text-align:center;margin-bottom:10px;">
+        <div class="col-sm-12"><h3>Share <a href="@path">@shortPath</a> with your team <i id="openQR" class="fa fa-qrcode" style="cursor: pointer"></i></h3></div>
+        <div class="col-sm-11"><div id="qr" style="width:400px; margin: 0 auto; display:none;"></div></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 bg-success hidden" id="message" style="font-size:1.3em;margin-bottom:5px;"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 vote-option">
+            <div class="row">
+                <div class="col-sm-11 well well-sm" id="item1">
+                    <div class="col-sm-12 submission-title">@Model.ItemTitle1</div>
+                    <div class="col-sm-12 submission-votes" id="item1Votes">@Model.Item1Votes</div>
+                    <div class="col-sm-12 submission-desc">@Model.ItemDesc1</div>
+                    <div class="col-sm-12" style="text-align:center; margin-top:10px;">
+                        <button data-item="1" type="button" class="btn btn-lg btn-primary" disabled="disabled">Vote</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-sm-6 vote-option">
-        <div class="row">
-            <div class="col-sm-11 col-sm-offset-1 well well-sm" id="item2">
-                <div class="col-sm-12 submission-title">@Model.ItemTitle2</div>
-                <div class="col-sm-12 submission-votes" id="item2Votes">@Model.Item2Votes</div>
-                <div class="col-sm-12 submission-desc">@Model.ItemDesc2</div>
-                <div class="col-sm-12" style="text-align:center; margin-top:10px;">
-                    <button data-item="2" type="button" class="btn btn-lg btn-primary" disabled="disabled">Vote</button>
+        <div class="col-sm-6 vote-option">
+            <div class="row">
+                <div class="col-sm-11 col-sm-offset-1 well well-sm" id="item2">
+                    <div class="col-sm-12 submission-title">@Model.ItemTitle2</div>
+                    <div class="col-sm-12 submission-votes" id="item2Votes">@Model.Item2Votes</div>
+                    <div class="col-sm-12 submission-desc">@Model.ItemDesc2</div>
+                    <div class="col-sm-12" style="text-align:center; margin-top:10px;">
+                        <button data-item="2" type="button" class="btn btn-lg btn-primary" disabled="disabled">Vote</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,60 +72,60 @@
     <script src="/signalr/hubs"></script>
     <script src="~/Content/Scripts/kendo.dataviz.min.js"></script>
     <script type="text/javascript">
-    $(function () {
-        $('#qr').kendoQRCode({
-            value: '@shortPath',
-            errorCorrection: 'M',
-            size: 500
-        });
-        $('#openQR').click(function() {
-            $('#qr').toggle('fast');
-        });
-        var threshold = @Model.Threshold;
-
-        var voteHub = $.connection.voteHub;
-
-        // updated votes from the server
-        voteHub.client.updateVotes = function (item1Votes, item2Votes) {
-            $('#item1Votes').text(item1Votes);
-            $('#item2Votes').text(item2Votes);
-
-            checkThresholds(item1Votes, item2Votes);
-        };
-
-        // start the connection
-        $.connection.hub.start()
-            .done(function () {
-                // enable voting
-                $('button').removeAttr('disabled');
-                checkThresholds(@Model.Item1Votes, @Model.Item2Votes);
-                // join the group for updates
-                voteHub.server.joinVote('@Model.Key');
-                // wire up the buttons
-                $('button').on('touchstart click', function () {
-                    $('button').attr('disabled', 'disabled');
-                    var key = '@Model.Key';
-                    var item = $(this).data('item');
-                    // submit a vote
-                    voteHub.server.vote(key, item);
-
-                    $('#message').text('Thanks for voting!').removeClass('hidden');
-                });
-            })
-            .fail(function (a, b, c, d) {
-                $('#message').text('Sorry, an error occurred :(').addClass('bg-warning').removeClass(['hidden','bg-success']);
+        $(function () {
+            $('#qr').kendoQRCode({
+                value: '@shortPath',
+                errorCorrection: 'M',
+                size: (Math.min(500, $(document).width()-50))
             });
+            $('#openQR').click(function() {
+                $('#qr').toggle('fast');
+            });
+            var threshold = @Model.Threshold;
 
-        function checkThresholds(item1Votes, item2Votes) {
-            if (item1Votes >= threshold) {
-                $('#item1').css('background-color', '#98fb98');
-                $('button').attr('disabled', 'disabled');
+            var voteHub = $.connection.voteHub;
+
+            // updated votes from the server
+            voteHub.client.updateVotes = function (item1Votes, item2Votes) {
+                $('#item1Votes').text(item1Votes);
+                $('#item2Votes').text(item2Votes);
+
+                checkThresholds(item1Votes, item2Votes);
+            };
+
+            // start the connection
+            $.connection.hub.start()
+                .done(function () {
+                    // enable voting
+                    $('#voteSection button').removeAttr('disabled');
+                    checkThresholds(@Model.Item1Votes, @Model.Item2Votes);
+                    // join the group for updates
+                    voteHub.server.joinVote('@Model.Key');
+                    // wire up the buttons
+                    $('#voteSection button').on('touchstart click', function () {
+                        $('#voteSection button').attr('disabled', 'disabled');
+                        var key = '@Model.Key';
+                        var item = $(this).data('item');
+                        // submit a vote
+                        voteHub.server.vote(key, item);
+
+                        $('#message').text('Thanks for voting!').removeClass('hidden');
+                    });
+                })
+                .fail(function (a, b, c, d) {
+                    $('#message').text('Sorry, an error occurred :(').addClass('bg-warning').removeClass(['hidden','bg-success']);
+                });
+
+            function checkThresholds(item1Votes, item2Votes) {
+                if (item1Votes >= threshold) {
+                    $('#item1').css('background-color', '#98fb98');
+                    $('#voteSection button').attr('disabled', 'disabled');
+                }
+                if (item2Votes >= threshold) {
+                    $('#item2').css('background-color', '#98fb98');
+                    $('#voteSection button').attr('disabled', 'disabled');
+                }
             }
-            if (item2Votes >= threshold) {
-                $('#item2').css('background-color', '#98fb98');
-                $('button').attr('disabled', 'disabled');
-            }
-        }
-    });
+        });
     </script>
 }
