@@ -4,6 +4,7 @@
     ViewBag.Title = "Vote!";
     Layout = "Shared/_Layout.cshtml";
     var path = RenderContext.Context.Request.Url.ToString();
+    var shortPath = "http://bklog.in/" + Model.Key;
 }
 <style scoped>
     .vote-option {
@@ -32,7 +33,7 @@
 
 <input type="hidden" id="key" value="@Model.Key" />
 <div class="row" style="text-align:center;margin-bottom:10px;">
-    <div class="col-sm-12"><h3>Share <a href="@path">@path</a> with your team <i id="openQR" class="fa fa-qrcode" style="cursor: pointer"></i></h3></div>
+    <div class="col-sm-12"><h3>Share <a href="@path">@shortPath</a> with your team <i id="openQR" class="fa fa-qrcode" style="cursor: pointer"></i></h3></div>
     <div class="col-sm-11"><div id="qr" style="width:400px; margin: 0 auto; display:none;"></div></div>
 </div>
 <div class="row">
@@ -72,7 +73,7 @@
     <script type="text/javascript">
     $(function () {
         $('#qr').kendoQRCode({
-            value: '@path',
+            value: '@shortPath',
             errorCorrection: 'M',
             size: 500
         });

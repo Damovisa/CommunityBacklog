@@ -30,7 +30,7 @@ namespace CommunityBacklogWebRole.NancyModules
                 var saveData = this.Bind<SubmissionModel>();
 
                 var service = new SubmissionEntityService();
-                var urlKey = GetRandomString(6); // some random key
+                var urlKey = GetRandomString(4); // some random key
                 if (VsoHelper.GetActiveUser() != null)
                 {
                     var savedObject = service.Add(urlKey, VsoHelper.GetActiveUser().refreshToken, saveData);

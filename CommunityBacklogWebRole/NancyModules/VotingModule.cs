@@ -1,6 +1,7 @@
 ﻿using CommunityBacklogWebRole.Models;
 using CommunityBacklogWebRole.Storage;
 using Nancy;
+using Nancy.Responses;
 
 namespace CommunityBacklogWebRole.NancyModules
 {
@@ -17,6 +18,12 @@ namespace CommunityBacklogWebRole.NancyModules
             {
                 var key = (string) _.key;
                 var submission = _submissionEntityService.GetSubmission(key);
+                if (submission == null)
+                {
+                    return new TextResponse(
+                        "Can't find a submission with that key. Please check the spelling and try again" +
+                        " (note that keys are case-sensitive).") { StatusCode = HttpStatusCode.NotFound };
+                }
                 var model = new VoteModel
                 {
                     Key = submission.RowKey,
