@@ -143,6 +143,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\favicon.png" />
+    <Content Include="Content\Scripts\kendo.dataviz.min.js" />
     <Content Include="Content\Scripts\kendo.dataviz.qrcode.min.js" />
     <Content Include="Content\Scripts\OAuth.js" />
     <Content Include="Content\Scripts\vso.js" />
@@ -446,6 +447,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="Content\Scripts\kendo.dataviz.qrcode.min.js.map" />
+    <Content Include="Content\Scripts\kendo.dataviz.min.js.map" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
