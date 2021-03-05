@@ -7,8 +7,8 @@ This demo app has the following features:
 * Built on the [NancyFX](http://nancyfx.org) framework
 * SignalR for live vote counts
 * Azure Table Storage for storage of potential backlog entries and OAuth keys
-* [OAuth authentication](http://www.visualstudio.com/integrate/get-started/get-started-auth-oauth2-vsi) against Visual Studio Online
-* Use of a few [Visual Studio Online REST APIs](http://www.visualstudio.com/integrate/reference/reference-vso-overview-vsi)
+* [OAuth authentication](https://www.visualstudio.com/integrate/get-started/get-started-auth-oauth2-vsi?WT.mc_id=devops-0000-dabrady) against Visual Studio Online
+* Use of a few [Visual Studio Online REST APIs](https://www.visualstudio.com/integrate/reference/reference-vso-overview-vsi?WT.mc_id=devops-0000-dabrady)
 
 If you have any questions, hit me up on Twitter at @damovisa.
 
